@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Atividade3.2</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package org.example;
+
+import org.example.entities.Aviao;
+import org.example.entities.Passageiro;
+import org.example.entities.Reserva;
+import org.example.entities.Voo;
+import org.example.repositories.BD;
+
+import java.time.LocalDateTime;
+import java.util.Scanner;
+
+<span class="nc" id="L12">public class App {</span>
+    public static void main(String[] args) {
+<span class="nc" id="L14">        Scanner scanner = new Scanner(System.in);</span>
+        int opcao;
+
+        do {
+<span class="nc" id="L18">            System.out.println(&quot;===== MENU PRINCIPAL =====&quot;);</span>
+<span class="nc" id="L19">            System.out.println(&quot;1 - Cadastrar passageiro&quot;);</span>
+<span class="nc" id="L20">            System.out.println(&quot;2 - Listar passageiros&quot;);</span>
+<span class="nc" id="L21">            System.out.println(&quot;3 - Cadastrar avião&quot;);</span>
+<span class="nc" id="L22">            System.out.println(&quot;4 - Listar aviões&quot;);</span>
+<span class="nc" id="L23">            System.out.println(&quot;5 - Cadastrar voo&quot;);</span>
+<span class="nc" id="L24">            System.out.println(&quot;6 - Listar voos&quot;);</span>
+<span class="nc" id="L25">            System.out.println(&quot;7 - Reservar passagem&quot;);</span>
+<span class="nc" id="L26">            System.out.println(&quot;8 - Listar reservas&quot;);</span>
+<span class="nc" id="L27">            System.out.println(&quot;9 - Sair&quot;);</span>
+<span class="nc" id="L28">            System.out.print(&quot;Escolha uma opção: &quot;);</span>
+<span class="nc" id="L29">            opcao = scanner.nextInt();</span>
+<span class="nc" id="L30">            scanner.nextLine();</span>
+
+<span class="nc bnc" id="L32" title="All 10 branches missed.">            switch (opcao) {</span>
+                case 1:
+<span class="nc" id="L34">                    cadastrarPassageiro(scanner);</span>
+<span class="nc" id="L35">                    break;</span>
+                case 2:
+<span class="nc" id="L37">                    listarPassageiros();</span>
+<span class="nc" id="L38">                    break;</span>
+                case 3:
+<span class="nc" id="L40">                    cadastrarAviao(scanner);</span>
+<span class="nc" id="L41">                    break;</span>
+                case 4:
+<span class="nc" id="L43">                    listarAvioes();</span>
+<span class="nc" id="L44">                    break;</span>
+                case 5:
+<span class="nc" id="L46">                    cadastrarVoo(scanner);</span>
+<span class="nc" id="L47">                    break;</span>
+                case 6:
+<span class="nc" id="L49">                    listarVoos();</span>
+<span class="nc" id="L50">                    break;</span>
+                case 7:
+<span class="nc" id="L52">                    reservarPassagem(scanner);</span>
+<span class="nc" id="L53">                    break;</span>
+                case 8:
+<span class="nc" id="L55">                    listarReservas();</span>
+<span class="nc" id="L56">                    break;</span>
+                case 9:
+<span class="nc" id="L58">                    System.out.println(&quot;Saindo...&quot;);</span>
+<span class="nc" id="L59">                    break;</span>
+                default:
+<span class="nc" id="L61">                    System.out.println(&quot;Opção inválida!&quot;);</span>
+            }
+<span class="nc" id="L63">            System.out.println();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        } while (opcao != 9);</span>
+
+<span class="nc" id="L66">        scanner.close();</span>
+<span class="nc" id="L67">    }</span>
+
+    private static void cadastrarPassageiro(Scanner scanner) {
+
+<span class="nc" id="L71">        System.out.print(&quot;ID: &quot;);</span>
+<span class="nc" id="L72">        int id = scanner.nextInt();</span>
+<span class="nc" id="L73">        scanner.nextLine();</span>
+
+<span class="nc" id="L75">        System.out.print(&quot;Nome: &quot;);</span>
+<span class="nc" id="L76">        String nome = scanner.nextLine();</span>
+
+<span class="nc" id="L78">        System.out.print(&quot;CPF (apenas números): &quot;);</span>
+<span class="nc" id="L79">        String cpf = scanner.nextLine();</span>
+
+<span class="nc" id="L81">        System.out.print(&quot;E-mail: &quot;);</span>
+<span class="nc" id="L82">        String email = scanner.nextLine();</span>
+
+        try {
+<span class="nc" id="L85">            Passageiro passageiro = new Passageiro(id, nome, cpf, email);</span>
+<span class="nc" id="L86">            BD.passageiros.add(passageiro);</span>
+
+<span class="nc" id="L88">            System.out.println(&quot;Passageiro cadastrado com sucesso!&quot;);</span>
+
+<span class="nc" id="L90">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L91">            System.out.println(&quot;Erro ao cadastrar passageiro: &quot; + e.getMessage());</span>
+<span class="nc" id="L92">        }</span>
+<span class="nc" id="L93">    }</span>
+
+    private static void listarPassageiros() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (BD.passageiros.isEmpty()) {</span>
+<span class="nc" id="L97">            System.out.println(&quot;Nenhum passageiro cadastrado.&quot;);</span>
+        } else {
+<span class="nc" id="L99">            System.out.println(&quot;Lista de passageiros:&quot;);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            for (Passageiro p : BD.passageiros) {</span>
+<span class="nc" id="L101">                System.out.println(&quot;ID: &quot; + p.getId() + &quot; | Nome: &quot; + p.getNome() + &quot; | CPF: &quot; + p.getCpf() + &quot; | Email: &quot; + p.getEmail());</span>
+<span class="nc" id="L102">            }</span>
+        }
+<span class="nc" id="L104">    }</span>
+
+    private static void cadastrarAviao(Scanner scanner) {
+<span class="nc" id="L107">        System.out.print(&quot;ID: &quot;);</span>
+<span class="nc" id="L108">        int id = scanner.nextInt();</span>
+<span class="nc" id="L109">        scanner.nextLine();</span>
+
+<span class="nc" id="L111">        System.out.print(&quot;Modelo: &quot;);</span>
+<span class="nc" id="L112">        String modelo = scanner.nextLine();</span>
+
+<span class="nc" id="L114">        System.out.print(&quot;Capacidade: &quot;);</span>
+<span class="nc" id="L115">        int capacidade = scanner.nextInt();</span>
+<span class="nc" id="L116">        scanner.nextLine();</span>
+
+<span class="nc" id="L118">        System.out.print(&quot;Fabricante: &quot;);</span>
+<span class="nc" id="L119">        String fabricante = scanner.nextLine();</span>
+
+        try {
+<span class="nc" id="L122">            Aviao aviao = new Aviao(id, modelo, capacidade, fabricante);</span>
+<span class="nc" id="L123">            BD.avioes.add(aviao);</span>
+<span class="nc" id="L124">            System.out.println(&quot;Avião cadastrado com sucesso!&quot;);</span>
+<span class="nc" id="L125">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L126">            System.out.println(&quot;Erro ao cadastrar avião: &quot; + e.getMessage());</span>
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">    }</span>
+
+    private static void listarAvioes() {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (BD.avioes.isEmpty()) {</span>
+<span class="nc" id="L132">            System.out.println(&quot;Nenhum avião cadastrado.&quot;);</span>
+        } else {
+<span class="nc" id="L134">            System.out.println(&quot;Lista de aviões:&quot;);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            for (Aviao a : BD.avioes) {</span>
+<span class="nc" id="L136">                System.out.println(&quot;ID: &quot; + a.getId() + &quot; | Modelo: &quot; + a.getModelo() + &quot; | Capacidade: &quot; + a.getCapacidade() + &quot; | Fabricante: &quot; + a.getFabricante());</span>
+<span class="nc" id="L137">            }</span>
+        }
+<span class="nc" id="L139">    }</span>
+
+    private static void cadastrarVoo(Scanner scanner) {
+<span class="nc" id="L142">        System.out.print(&quot;ID do voo: &quot;);</span>
+<span class="nc" id="L143">        int id = scanner.nextInt();</span>
+<span class="nc" id="L144">        scanner.nextLine();</span>
+
+<span class="nc" id="L146">        System.out.print(&quot;Origem: &quot;);</span>
+<span class="nc" id="L147">        String origem = scanner.nextLine();</span>
+
+<span class="nc" id="L149">        System.out.print(&quot;Destino: &quot;);</span>
+<span class="nc" id="L150">        String destino = scanner.nextLine();</span>
+
+<span class="nc" id="L152">        System.out.print(&quot;Data e hora (yyyy-MM-ddTHH:mm): &quot;);</span>
+<span class="nc" id="L153">        String dataHoraStr = scanner.nextLine();</span>
+
+<span class="nc" id="L155">        System.out.print(&quot;ID do avião: &quot;);</span>
+<span class="nc" id="L156">        int idAviao = scanner.nextInt();</span>
+<span class="nc" id="L157">        scanner.nextLine();</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        Aviao aviao = BD.avioes.stream().filter(a -&gt; a.getId() == idAviao).findFirst().orElse(null);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (aviao == null) {</span>
+<span class="nc" id="L161">            System.out.println(&quot;Avião não encontrado.&quot;);</span>
+<span class="nc" id="L162">            return;</span>
+        }
+
+        try {
+<span class="nc" id="L166">            LocalDateTime dataHora = java.time.LocalDateTime.parse(dataHoraStr);</span>
+<span class="nc" id="L167">            Voo voo = new Voo(id, origem, destino, dataHora, aviao);</span>
+<span class="nc" id="L168">            voo.setPassageiros(new java.util.ArrayList&lt;&gt;());</span>
+<span class="nc" id="L169">            BD.voos.add(voo);</span>
+
+<span class="nc" id="L171">            System.out.println(&quot;Voo cadastrado com sucesso!&quot;);</span>
+
+<span class="nc" id="L173">        } catch (Exception e) {</span>
+<span class="nc" id="L174">            System.out.println(&quot;Erro ao cadastrar voo: &quot; + e.getMessage());</span>
+
+<span class="nc" id="L176">        }</span>
+<span class="nc" id="L177">    }</span>
+
+    private static void listarVoos() {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (BD.voos.isEmpty()) {</span>
+<span class="nc" id="L181">            System.out.println(&quot;Nenhum voo cadastrado.&quot;);</span>
+        } else {
+<span class="nc" id="L183">            System.out.println(&quot;Lista de voos:&quot;);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            for (Voo v : BD.voos) {</span>
+<span class="nc" id="L185">                System.out.println(&quot;ID: &quot; + v.getId() + &quot; | Origem: &quot; + v.getOrigem() + &quot; | Destino: &quot; + v.getDestino() +</span>
+<span class="nc" id="L186">                        &quot; | Data/Hora: &quot; + v.getDataHora() + &quot; | Avião: &quot; + v.getAviao().getModelo() +</span>
+<span class="nc" id="L187">                        &quot; | Capacidade disponível: &quot; + v.getCapacidadeDisponivel());</span>
+<span class="nc" id="L188">            }</span>
+        }
+<span class="nc" id="L190">    }</span>
+
+    private static void reservarPassagem(Scanner scanner) {
+<span class="nc" id="L193">        System.out.print(&quot;ID da reserva: &quot;);</span>
+<span class="nc" id="L194">        int idReserva = scanner.nextInt();</span>
+<span class="nc" id="L195">        scanner.nextLine();</span>
+
+<span class="nc" id="L197">        System.out.print(&quot;ID do passageiro: &quot;);</span>
+<span class="nc" id="L198">        int idPassageiro = scanner.nextInt();</span>
+<span class="nc" id="L199">        scanner.nextLine();</span>
+
+<span class="nc" id="L201">        System.out.print(&quot;ID do voo: &quot;);</span>
+<span class="nc" id="L202">        int idVoo = scanner.nextInt();</span>
+<span class="nc" id="L203">        scanner.nextLine();</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        Passageiro passageiro = BD.passageiros.stream().filter(p -&gt; p.getId() == idPassageiro).findFirst().orElse(null);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        Voo voo = BD.voos.stream().filter(v -&gt; v.getId() == idVoo).findFirst().orElse(null);</span>
+
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        if (passageiro == null) {</span>
+<span class="nc" id="L209">            System.out.println(&quot;Passageiro não encontrado.&quot;);</span>
+<span class="nc" id="L210">            return;</span>
+        }
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (voo == null) {</span>
+<span class="nc" id="L213">            System.out.println(&quot;Voo não encontrado.&quot;);</span>
+<span class="nc" id="L214">            return;</span>
+        }
+
+        try {
+<span class="nc" id="L218">            Reserva reserva = new Reserva(idReserva, passageiro, voo, java.time.LocalDateTime.now());</span>
+<span class="nc" id="L219">            BD.reservas.add(reserva);</span>
+<span class="nc" id="L220">            System.out.println(&quot;Reserva realizada com sucesso!&quot;);</span>
+<span class="nc" id="L221">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L222">            System.out.println(&quot;Erro ao reservar passagem: &quot; + e.getMessage());</span>
+<span class="nc" id="L223">        }</span>
+<span class="nc" id="L224">    }</span>
+
+    private static void listarReservas() {
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        if (BD.reservas.isEmpty()) {</span>
+<span class="nc" id="L228">            System.out.println(&quot;Nenhuma reserva cadastrada.&quot;);</span>
+        } else {
+<span class="nc" id="L230">            System.out.println(&quot;Lista de reservas:&quot;);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            for (Reserva r : BD.reservas) {</span>
+<span class="nc" id="L232">                System.out.println(&quot;ID: &quot; + r.getId() + &quot; | Passageiro: &quot; + r.getPassageiro().getNome() +</span>
+<span class="nc" id="L233">                        &quot; | Voo: &quot; + r.getVoo().getId() + &quot; | Data da reserva: &quot; + r.getDataReserva());</span>
+<span class="nc" id="L234">            }</span>
+        }
+<span class="nc" id="L236">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
